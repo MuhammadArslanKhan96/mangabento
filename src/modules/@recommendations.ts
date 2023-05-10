@@ -49,8 +49,8 @@ const topAllManga = async () => {
 const topWebtoons = async () => {
     const url = `manga/top/manhua`;
     const url2 = `manga/top/manhwa`;
-    const { data: { data: manhwaData } } = await fetch({ endpoint: url })
-    const { data: { data: manhuaData } } = await fetch({ endpoint: url2 })
+    const manhwaData = await fetch({ endpoint: url })
+    const manhuaData = await fetch({ endpoint: url2 })
     const data = [...manhwaData, ...manhuaData]
     return data
 }
@@ -59,10 +59,10 @@ const mostPopularManga = async () => {
     const url = `manga/top/bypopularity`;
     try {
         const response = await fetch({ endpoint: url });
-        if (!response.data) {
+        if (!response) {
             throw new Error('No data found');
         }
-        return response.data;
+        return response;
     } catch (error) {
         console.error(error);
         return null;

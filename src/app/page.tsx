@@ -1,12 +1,9 @@
 import Image from 'next/image'
 import styles from './page.module.css'
-import { supabase } from '@/modules'
+import { initCharts } from '@/modules'
 
 export default async function Home() {
 
-  const { data, error } = await supabase.from('Test').select('id')
-
-  console.log(data, error)
   return (
     <main className={styles.main}>
       <div className={styles.description}>
