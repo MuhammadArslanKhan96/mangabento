@@ -22,18 +22,52 @@ const searchData = async ({ q }: Search) => {
     const url = `manga/search/${q}`;
     try {
         const response = await fetch({ endpoint: url });
-        console.log(response.data);
+        if (!response.data) {
+            throw new Error('No data found');
+        }
+        return response.data;
     } catch (error) {
         console.error(error);
+        return null;
     }
 }
 
 const topAllManga = async () => {
+    const url = `manga/top/all`;
+    try {
+        const response = await fetch({ endpoint: url });
+        if (!response) {
+            throw new Error('No data found');
+        }
+        return response;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
 }
 
 const topWebtoons = async () => {
+    const url = `manga/top/manhua`;
+    const url2 = `manga/top/manhwa`;
+    const { data: { data: manhwaData } } = await fetch({ endpoint: url })
+    const { data: { data: manhuaData } } = await fetch({ endpoint: url2 })
+    const data = [...manhwaData, ...manhuaData]
+    return data
 }
 
 const mostPopularManga = async () => {
+    const url = `manga/top/bypopularity`;
+    try {
+        const response = await fetch({ endpoint: url });
+        if (!response.data) {
+            throw new Error('No data found');
+        }
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
 
 }
+
+export { searchData, topAllManga, topWebtoons, mostPopularManga };
