@@ -1,6 +1,7 @@
 interface FetchParams {
     endpoint: string;
     method?: string;
+    parameters?: any;
 }
 
 interface Search {
@@ -8,4 +9,18 @@ interface Search {
     limit?: number;
 }
 
-export type { FetchParams, Search }
+interface Providers {
+    name: string;
+}
+
+interface WebtoonChapters {
+    name: string;
+    webtoon: string;
+}
+
+interface InsertDB {
+    table: string;
+    data: any;
+}
+
+export type { FetchParams, Search, Providers, WebtoonChapters, InsertDB }

@@ -1,3 +1,15 @@
+/*
+The @recommendations.ts file is responsible for fetching data from the MangaRecommendations API. It contains the following functions:
+
+searchData: Fetches data from the MangaRecommendations API based on the search query.
+topAllManga: Fetches data from the MangaRecommendations API based on the top all manga chart.
+topWebtoons: Fetches data from the MangaRecommendations API based on the top webtoons chart.
+mostPopularManga: Fetches data from the MangaRecommendations API based on the most popular manga chart.
+
+Theses functions will be fetched on cron jobs and stored in the Supabase database.
+While the search function will be used to fetch data from the API endpoint directly.
+*/
+
 import axios from 'axios';
 import { FetchParams, Search } from './types';
 
