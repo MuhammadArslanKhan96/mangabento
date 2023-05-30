@@ -61,11 +61,12 @@ const searchDB = async (table: string) => {
 const uploadFile = async (bucket: string, name: string, imageUrl: string) => {
     const response = await fetch(imageUrl);
     const blob = await response.blob();
-    const fileExtension = imageUrl.split('.')[1].toLowerCase();
-
+    const fileExtension = imageUrl.split('.').slice(-1)[0].toLowerCase();
+    console.log('repsonse', blob)
     const { error } = await supabase.storage.from(bucket).upload(`public/${name}.${fileExtension}`, blob, {
         cacheControl: '3600',
-        upsert: false
+        upsert: false,
+        contentType: "" + blob.type + ""
     });
 
     const { data } = supabase.storage.from(bucket).getPublicUrl(`public/${name}.${fileExtension}`);
@@ -74,9 +75,10 @@ const uploadFile = async (bucket: string, name: string, imageUrl: string) => {
 
 
 const insertDB = async ({ table, data }: InsertDB) => {
-    const { error } = await supabase.from(`${table}`).insert(data)
-    console.log(error)
-    return error
+    const { error } = await supabase.from(`${table}`).insert(data);
+    const response = error ? `Error: cannot add item to ${table}` : `Success adding item to ${table}`
+    console.log(response, error)
+    return response
 }
 
 export { initCharts, updateCharts, insertDB, uploadFile, searchDB }

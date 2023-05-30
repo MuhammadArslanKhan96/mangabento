@@ -10,9 +10,9 @@ export async function GET() {
     providers?.forEach(async (item: any) => {
         const list = await getAllWebtoons({ name: item.slug });
         list.forEach(async (item: any) => {
-            const publicImgUrl = await uploadFile('webtoons', item.slug, item.coverURL);
+            //  const publicImgUrl = await uploadFile('webtoon_cover', item.slug, item.coverURL);
             insertDB({
-                table: 'books',
+                table: 'webtoon_books',
                 data: {
                     provider: item.provider,
                     genre: item.genre,
@@ -20,7 +20,7 @@ export async function GET() {
                     updatedAt: item.updatedAt,
                     synopsis: item.synopsis,
                     title: item.title,
-                    cover: publicImgUrl,
+                    cover: item.coverURL,
                     slug: item.slug,
                 }
             })
@@ -31,5 +31,9 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+    const coverURL = 'https://cdn.shopify.com/s/files/1/0533/2089/files/JPEG-and-WebP.png';
+
+    const publicImgUrl = await uploadFile('webtoon_cover', 'test_name', coverURL);
+    return NextResponse.json({ status: 'sent', publicImgUrl });
 
 }

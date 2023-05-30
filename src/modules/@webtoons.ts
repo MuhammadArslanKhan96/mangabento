@@ -53,7 +53,23 @@ const getLatest = async () => {
 
 const getWebtoon = async () => { }
 
-const getChaptes = async () => { }
+const getChapters = async () => {
+
+    const url = `webtoons/all`;
+    const params = {
+        provider: name,
+    }
+    try {
+        const response = await fetch({ endpoint: url, parameters: params });
+        if (!response) {
+            throw new Error('No data found');
+        }
+        return response;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
 
 // Initially download the data from the API and insert it into the database
 
@@ -87,7 +103,7 @@ const getAllChapters = async ({ name, webtoon }: WebtoonChapters) => {
         }
         return response;
     } catch (error) {
-        console.error(error);
+        //  console.error(error);
         return null;
     }
 }
