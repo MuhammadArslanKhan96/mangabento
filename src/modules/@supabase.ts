@@ -70,7 +70,7 @@ const searchDBPagination = async (table: string, range: [number, number]) => {
 
 const searchDBPaginationWithKeyword = async (table: string, range: [number, number], keywords: string) => {
     const { data, error } = await supabase.from(table).select().range(range[0], range[1]);
-    return data?.filter((i) => keywords.split(",")?.some((item) => i.genre.includes(item)));
+    return data?.filter((i) => (keywords ? keywords.split(",")?.some((item) => i.genre.includes(item)) : true));
 };
 
 const uploadFile = async (bucket: string, name: string, imageUrl: string) => {

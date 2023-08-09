@@ -7,9 +7,7 @@ export async function GET(req: { url: string }) {
     const to = Number(searchParams.get("to"));
     const keyword = searchParams.get("keywords");
     const providers = await searchDB("providers");
-    const webtoons = keyword
-        ? await searchDBPaginationWithKeyword("webtoon_books", [from || 0, to || 10], keyword as string)
-        : await searchDB("webtoon_books");
+    const webtoons = await searchDBPaginationWithKeyword("webtoon_books", [from || 0, to || 10], keyword as string);
     const chapters = await searchDB("webtoon_chapters");
     let newwebtoons = webtoons?.map((i) => ({
         ...i,
