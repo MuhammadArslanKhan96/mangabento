@@ -4,7 +4,15 @@ import { getProviders, insertDB, uploadFile } from "@/modules/";
 type ResponseData = {
     message: string;
 };
-
+/**
+ * @swagger
+ * /api/providers:
+ *   get:
+ *     description: Uploads providers from api to supabase
+ *     responses:
+ *       200:
+ *         description: { status: "sent" }
+ */
 export async function GET() {
     const providers = await getProviders();
 

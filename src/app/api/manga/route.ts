@@ -1,6 +1,25 @@
 import { searchDB, searchDBPagination } from "@/modules";
 import { NextResponse } from "next/server";
-
+/**
+ * @swagger
+ * /api/manga:
+ *   get:
+ *     parameters:
+ *      - in: query
+ *        name: from
+ *        schema:
+ *          type: integer
+ *        description: List of manga from
+ *      - in: query
+ *        name: to
+ *        schema:
+ *          type: integer
+ *        description: List of manga to
+ *     description: Returns the list of available manga paginated if from and to not provided return 11 only
+ *     responses:
+ *       200:
+ *         description: List of manga with provider and chapters
+ */
 export async function GET(req: { url: string }) {
     const { searchParams } = new URL(req.url);
     const from = Number(searchParams.get("from"));

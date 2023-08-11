@@ -4,6 +4,20 @@ import throttledQueue from "throttled-queue";
 
 const throttle = throttledQueue(20, 60000, true); // at most 20 requests per minute.
 
+/**
+ * @swagger
+ * /api/chapters:
+ *   get:
+ *     description: Uploads chapters of all provider's books from api to supabase
+ *     responses:
+ *       200:
+ *         description: { status: "sent" }
+ *   post:
+ *     description: Uploads file to supabase storage just testing
+ *     responses:
+ *       200:
+ *         description: { status: "sent", publicImageURL: "<imageURL>" }
+ */
 export async function GET() {
     const providers = await searchDB("providers");
     providers?.forEach(async (provider: any) => {
