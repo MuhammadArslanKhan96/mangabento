@@ -1,5 +1,5 @@
 import { searchDB, searchDBPaginationWithKeyword } from "@/modules";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 /**
  * @swagger
  * /api/manga/search:
@@ -25,7 +25,7 @@ import { NextResponse } from "next/server";
  *       200:
  *         description: List of manga with specified keywords with provider and chapters
  */
-export async function GET(req: { url: string }) {
+export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const from = Number(searchParams.get("from"));
     const to = Number(searchParams.get("to"));
