@@ -23,13 +23,16 @@ function AuthButtons() {
             {UserContext?.user ? (
                 <>
                     <h2>Hello {UserContext?.user.user?.user_metadata.name}</h2>
+                    <Link href={"/doc"} className="bg-green-400 px-4 py-2 rounded">
+                        See Docs
+                    </Link>
                     <h4
                         onClick={async () => {
                             const { error } = await supabase.auth.signOut();
                             if (error !== null) {
                                 console.log(error.message);
                             }
-                            localStorage.setItem('user', 'null')
+                            localStorage.setItem("user", "null");
                             UserContext?.setUser(null);
                         }}
                         className="bg-green-400 cursor-pointer px-4 py-2 rounded"

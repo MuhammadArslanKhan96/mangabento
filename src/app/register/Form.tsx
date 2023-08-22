@@ -55,7 +55,7 @@ function Form() {
 
     useEffect(() => {
         if (UserData?.user) {
-            router.push("/");
+            router.push("/doc");
         }
         // eslint-disable-next-line
     }, [UserData?.user]);
