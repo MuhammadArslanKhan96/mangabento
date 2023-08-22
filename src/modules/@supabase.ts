@@ -13,13 +13,18 @@ import { InsertDB } from "./types";
 
 // Supabase Docs: https://supabase.com/docs/reference/javascript/select
 
-const supabase = createClient(`${process.env.SUPABASE_URL}`, `${process.env.SUPABASE_ANON}`, {
-    auth: {
-        autoRefreshToken: false,
-        persistSession: false,
-        detectSessionInUrl: false,
-    },
-});
+const supabase = createClient(
+    `${process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL}`,
+    `${process.env.SUPABASE_ANON || process.env.NEXT_PUBLIC_SUPABASE_ANON}`,
+    {
+        auth: {
+            autoRefreshToken: false,
+            persistSession: false,
+            detectSessionInUrl: false,
+        },
+    }
+);
+
 
 async function userLogin() {
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -104,4 +109,5 @@ export {
     searchDBPagination,
     searchDBById,
     searchDBPaginationWithKeyword,
+    supabase
 };

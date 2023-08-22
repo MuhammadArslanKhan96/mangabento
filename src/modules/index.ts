@@ -3,6 +3,7 @@ The index.ts file is responsible for exporting the functions from the @recommend
  */
 export {
     initCharts,
+    supabase,
     insertDB,
     uploadFile,
     searchDB,
