@@ -9,7 +9,20 @@ export const getApiDocs = async () => {
                 title: "Manga API Examples",
                 version: "1.0",
             },
-            security: [],
+            components: {
+                securitySchemes: {
+                    bearerAuth: {
+                        type: "http",
+                        scheme: "bearer",
+                        bearerFormat: "JWT",
+                    },
+                },
+            },
+            security: [
+                {
+                    bearerAuth: [],
+                },
+            ],
         },
     });
     return spec;

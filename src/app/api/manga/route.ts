@@ -1,9 +1,12 @@
-import { searchDB, searchDBPagination } from "@/modules";
+import { searchDB, searchDBPagination, supabase } from "@/modules";
+import { headers } from "next/headers";
 import { NextResponse, NextRequest } from "next/server";
 /**
  * @swagger
  * /api/manga:
  *   get:
+ *     tags:
+ *          - Manga
  *     parameters:
  *      - in: query
  *        name: from
@@ -19,8 +22,30 @@ import { NextResponse, NextRequest } from "next/server";
  *     responses:
  *       200:
  *         description: List of manga with provider and chapters
+ *       400:
+ *         description: Error
+ *       401:
+ *         description: Unauthorized
  */
 export async function GET(req: NextRequest) {
+    const headersList = headers();
+    const token = headersList.get("Authorization");
+
+    if (!token) {
+        return new Response("Unauthorized", {
+            status: 401,
+        });
+    }
+
+    const jwt = token?.split("Bearer ")[1];
+
+    const { error } = await supabase.auth.getUser(jwt);
+
+    if (error !== null) {
+        return new Response("Invalid Token", {
+            status: 400,
+        });
+    }
     const { searchParams } = new URL(req.url);
     const from = Number(searchParams.get("from"));
     const to = Number(searchParams.get("to"));

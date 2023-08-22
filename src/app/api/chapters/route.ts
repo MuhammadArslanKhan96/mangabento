@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
-import { insertDB, uploadFile, searchDB, getAllChapters } from "@/modules";
+import { insertDB, uploadFile, searchDB, getAllChapters, supabase } from "@/modules";
 import throttledQueue from "throttled-queue";
+import { headers } from "next/headers";
 
 const throttle = throttledQueue(20, 60000, true); // at most 20 requests per minute.
 
@@ -9,16 +10,48 @@ const throttle = throttledQueue(20, 60000, true); // at most 20 requests per min
  * /api/chapters:
  *   get:
  *     description: Uploads chapters of all provider's books from api to supabase
+ *     tags:
+ *          - Chapters
  *     responses:
  *       200:
  *         description: { status: "sent" }
+ *       400:
+ *         description: Error
+ *       401:
+ *         description: Unauthorized
+ *     
  *   post:
+ *     tags:
+ *          - Chapters
  *     description: Uploads file to supabase storage just testing
  *     responses:
  *       200:
  *         description: { status: "sent", publicImageURL: "<imageURL>" }
+ *       400:
+ *         description: Error
+ *       401:
+ *         description: Unauthorized
  */
 export async function GET() {
+    
+    const headersList = headers();
+    const token = headersList.get("Authorization");
+
+    if (!token) {
+        return new Response("Unauthorized", {
+            status: 401,
+        });
+    }
+
+    const jwt = token?.split("Bearer ")[1];
+
+    const { error } = await supabase.auth.getUser(jwt);
+
+    if (error !== null) {
+        return new Response("Invalid Token", {
+            status: 400,
+        });
+    }
     const providers = await searchDB("providers");
     providers?.forEach(async (provider: any) => {
         const webtoons = await searchDB("webtoon_books");

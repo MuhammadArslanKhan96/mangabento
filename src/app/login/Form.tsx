@@ -37,6 +37,7 @@ function Form() {
                 return;
             }
             setSuccess('Login Successfully!')
+            console.log(data)
             localStorage.setItem('user', JSON.stringify(data))
             UserData?.setUser(data);
         } catch (error: any) {
